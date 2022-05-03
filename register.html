@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="./css/register.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Register</title>
+</head>
+
+<body>
+<br>
+<br>
+	<nav class="navbar navbar-expand-lg navbar-light ">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="./index.html">
+				<img src="./images/logo23.png" alt="">
+			</a>
+		</div>
+	</nav>
+	<div class="container" id="container">
+		<div class="form-container log-in-container">
+			<form id="formRegister" class="forma">
+				<h1>Register</h1>
+				<!-- <div class="social-container">
+					<a href="#" class="social"><i class="fa fa-facebook fa-2x"></i></a>
+					<a href="#" class="social"><i class="fab fa fa-twitter fa-2x"></i></a>
+				</div> -->
+				<input type="text" id="name"  placeholder="Enter User Name" required onblur="NameValidation()" />
+				<div style='font-size: 10px;'class="invalid-feedback"></div>
+				<input type="email" id="email" placeholder="Enter yourEmail" required/>
+					<!-- pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" /> -->
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<input type="text" class="input-felid" id="phone" placeholder="Enter Your phone" required>
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<input id="password" type="password" class="password" placeholder="Password" required/>
+					<!-- pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/" /> -->
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<input id="confirmpassword" type="password" class="password" oninput="validateConfirmPassword()"
+				 placeholder=" Repeat password" required/>
+					<!-- pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/" /> -->
+				<!-- <input type="checkbox" class="check-box"> <span>I have Read and agree </span> -->
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<!-- <div>
+				<button type="submit" id="sub" >Log In</button>
+				<button type="reset" id="sub2" action="http://127.0.0.1:5500/register.html" >cancel</button>
+			</div> -->
+			<div>
+                <input id="sub" type="submit" value="Register" >
+                <input id="sub2" type="reset" value="Cancel" >
+            </div>
+            <div id="registerError1"></div>
+            <div id="registerError2"></div>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<!-- <h1>wellcom to Bandi for electronics Service </h1> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+    <script type='module' src="./js/Registration2.js"></script>
+
+	<script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAtwDYK9bBmqbj6-b-Gm_vNFDvoePbDUFo",
+          authDomain: "htmlproject-63ac3.firebaseapp.com",
+          projectId: "htmlproject-63ac3",
+          storageBucket: "htmlproject-63ac3.appspot.com",
+          messagingSenderId: "1026952394751",
+          appId: "1:1026952394751:web:1c447de604cfdf92a3d9ca"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth();
+
+
+
+        // signup
+        const signupForm = document.getElementById("formRegister");
+        signupForm.addEventListener('submit', e => {
+            e.preventDefault();
+            debugger
+            const name = signupForm['name'].value;
+            const email = signupForm['email'].value;
+            const password = signupForm['password'].value;
+			const phone=signupForm['phone'].value;
+            console.log(name, email, password);
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user)
+                    set(ref(db, 'users/' + user.uid), {
+                        name: name,
+                        email: email,
+						phone:phone,
+                        password: password,
+                        role:"user"
+                    }).then(() => {
+                        signupForm.reset();
+                        location = "./login.html";
+                    }).catch(err => {
+                        const signupError = document.getElementById('registerError1');
+                        signupError.innerText = err.message;
+                    })
+                }).catch(err => {
+                    const signupError2 = document.getElementById('registerError2');
+                    signupError2.innerText = err.message;
+                })
+        })
+
+		//validate confirm password
+        function validateConfirmPassword() {
+            const password = document.getElementById('password');
+            const repeatpassword = document.getElementById('confirmpassword');
+            const validityState = repeatpassword.validity;
+
+            if (validityState.valueMissing) {
+                repeatpassword.setCustomValidity('You gotta fill this out, yo!');
+            }
+            else if (password.value != repeatpassword.value) {
+                repeatpassword.setCustomValidity('passwords are not match');
+            }
+            else {
+                repeatpassword.setCustomValidity('');
+            }
+            repeatpassword.reportValidity();
+        }
+        signupForm.addEventListener('reset', (e) => {
+			e.preventDefault();
+			window.location.replace("../index.html");
+		});
+    </script>
+	 
+
+
+</body>
+
+</html>

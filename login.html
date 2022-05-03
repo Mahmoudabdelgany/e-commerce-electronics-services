@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="./css/login.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="./css/all.min.css">
+	<title>Login Form Using HTML And CSS Only</title>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light ">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="./index.html">
+				<img src="../images/logo23.png" alt="">
+			</a>
+
+		</div>
+	</nav>
+	<div class="container" id="container">
+		<div class="form-container log-in-container">
+			<form id="formlogin" class="forma" action="#">
+				<h1>Login</h1>
+				<!-- <div class="social-container">
+					<a href="#" class="social"><i class="fa fa-facebook fa-2x"></i></a>
+					<a href="#" class="social"><i class="fab fa fa-twitter fa-2x"></i></a>
+				</div> -->
+				<span>to your account</span>
+				<input type="email" id="email" placeholder="Email" required />
+				<!-- pattern= "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" /> -->
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<input type="password" id="password" placeholder="Password" required />
+				<!-- pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/" /> -->
+				<div style='font-size: 10px;' class="invalid-feedback"></div>
+				<!-- <a href="#">Forgot your password?</a> -->
+				<div style="display: flex;">
+					<input id="sub" type="submit" value="Log in">
+					<input id="sub2" type="reset" value="Cancel">
+				</div>
+				<div id="registerError1"></div>
+				<div id="registerError2"></div>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<!-- <h1>welcome to Bondi for electronics Services </h1> -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type='module' src="./js/Registration.js"></script>
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+		import { getDatabase, set, ref, update, query, onValue } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+		import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+		// TODO: Add SDKs for Firebase products that you want to use
+		// https://firebase.google.com/docs/web/setup#available-libraries
+
+		// Your web app's Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyAtwDYK9bBmqbj6-b-Gm_vNFDvoePbDUFo",
+			authDomain: "htmlproject-63ac3.firebaseapp.com",
+			projectId: "htmlproject-63ac3",
+			storageBucket: "htmlproject-63ac3.appspot.com",
+			messagingSenderId: "1026952394751",
+			appId: "1:1026952394751:web:1c447de604cfdf92a3d9ca"
+		};
+
+		// Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const db = getDatabase(app);
+		const auth = getAuth();
+
+
+
+		//signin
+
+		const loginForm = document.getElementById("formlogin");
+
+		loginForm.addEventListener('submit', e => {
+			e.preventDefault();
+
+			const email = loginForm['email'].value;
+			const password = loginForm['password'].value;
+			signInWithEmailAndPassword(auth, email, password)
+				.then((userCredential) => {
+					debugger
+					// Signed in 
+					const user = userCredential.user;
+					const gotUserName = ref(db, 'users/' + user.uid + '/name');
+					onValue(gotUserName, (snapshot) => {
+						const n = snapshot.val();
+						const d = new Date();
+						d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+						let expires = "expires=" + d.toUTCString();
+						document.cookie = "username=" + n + ";" + expires + ";";
+					});
+
+					//Update users with the last login date
+					update(ref(db, 'users/' + user.uid), {
+						last_login: new Date().toLocaleDateString()
+					})
+
+
+					const starCountRef = ref(db, 'users/' + user.uid + '/role');
+					onValue(starCountRef, (snapshot) => {
+						const role = snapshot.val();
+						if (role == 'admin') {
+							location = "./admin/categories.html"
+						}
+						else if (role == 'user') {
+							location = './users/index.html'
+						}
+						else {
+							locatin = './unauth.html'
+						}
+
+					});
+
+
+					// ...
+				})
+				.catch((error) => {
+					const loginError = document.getElementById('registerError1');
+					console.log(error)
+					loginError.innerText = error.message;
+				})
+		});
+		loginForm.addEventListener('reset', (e) => {
+			e.preventDefault();
+			window.location.replace("../index.html");
+		});
+	</script>
+
+</body>
+
+</html>

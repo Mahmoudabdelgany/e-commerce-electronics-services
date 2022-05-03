@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Store</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/adminpages.css">
+    <link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<body onload="Getdata()">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="Categories.html">
+                <img src="../images/logo23.png" alt="">
+            </a>
+            <a class="navbar-brand" href="Categories.html">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+            <a class="navbar-brand" href="Categories.html">
+                Categories
+            </a>
+            <a class="navbar-brand" href="SubCategories.html">
+                SubCategories
+            </a>
+            <a class="navbar-brand" href="Products.html">
+                Products
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex navbar-collapse">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Sign in
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>
+        <form id="f1" action="">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <h1>Categories </h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <label for="name">Name</label></td>
+                    <td> <input id="catname" class="n" type="text"></td>
+                </tr>
+                <tr>
+                    <td> <label for="name">Description</label></td>
+                    <td> <input id="catdes" class="n" type="text"></td>
+                </tr>
+                <tr>
+                    <td> <label for="img">Image</label></td>
+                    <td>
+                        <input id="img" type='file' accept='image/*' name="filename">
+                    </td>
+
+                </tr>
+                <td></td>
+                <!-- <td><input id="btnsave" type="button" value="Add Category" onclick="GetCategory()"></td> -->
+                <td><input id="btnsave" type="button" value="Add Category" onclick="insertdata()"></td>
+            </table>
+        </form>
+    </div>
+    <br>
+    <div class="cart">
+        <table id="tab2">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>images</th>
+            </tr>
+        </table>
+
+        <script>
+            function Getdata() {
+                GetCount();
+                var request = new XMLHttpRequest();
+                request.open("GET", "https://project.apex-program.com/api/GetCategory", true)
+                request.send();
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4 & request.status == 200)
+                        display(JSON.parse(request.responseText))
+                }
+            }
+            var x;
+            function display(obj) {
+                debugger
+                console.log(obj);
+                var d = obj.data;
+                for (let i = 0; i < d.length; i++) {
+                    x = `<tr><td>${d[i].name}</td>
+    <td>${d[i].description}</td>
+    <td><img src="${d[i].imagePath}" alt="No Image" id="img" style='height:150px ;width:200px;'></td></tr>`
+                    if (x != "" || x != "undefiened") {
+                        document.getElementById("tab2").innerHTML += x;
+                    }
+                }
+
+            }
+
+        </script>
+        <script>
+
+            function insertdata() {
+
+                debugger
+                var name = document.getElementById("catname").value;
+                var descr = document.getElementById("catdes").value;
+                var file = document.querySelector('[name=filename]').files;
+                if (file) {
+                    debugger
+                    var formdata = new FormData();
+                    formdata.append('Image', file[0]);
+                    formdata.append('Name', name);
+                    formdata.append('description', descr);
+                    for (var pair of formdata.entries()) {
+                        console.log(pair[0] + ', ' + pair[1]);
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', "https://project.apex-program.com/api/AddCategory");
+                    xhr.send(formdata);
+
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState != 4) return;
+                        if (xhr.status != 200) {
+                            alert("Status: " + xhr.status);
+                            document.getElementById('f1').reset();
+                            Getdata()
+                        } else {
+                            alert(xhr.responseText);
+                        }
+                    };
+                } else {
+                    alert("Not file.");
+                }
+            } 
+        </script>
+        <script src="../js/all.min.js"></script>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            function GetCount() {
+                let name = "username=";
+                let ca = document.cookie.split(';');
+                var username;
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        username = c.substring(name.length, c.length);
+                    }
+                }
+                document.getElementById("navbarDropdown").innerHTML = "Welcome " + username;
+            }
+            function logout() {
+                const d = new Date();
+                d.setTime(d.getTime() - (3 * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = "username=" + "" + ";" + expires + ";path=/";
+                window.location.replace("../index.html");
+            }
+        </script>
+</body>
+
+</html>

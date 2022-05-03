@@ -1,0 +1,96 @@
+#add {
+    display: flex;
+    list-style: none;
+}
+
+#add li {
+    margin-left: 40px;
+}
+
+#add li a {
+    text-decoration: none;
+}
+
+#add li a:hover {
+    color: white;
+}
+
+#f1 {
+    background-color: #323335;
+    border: 1px solid navy;
+    width: fit-content;
+    margin: auto;
+    color: white;
+
+}
+
+td {
+    padding: 10px;
+    font-size: 20px;
+    /* border: 1px solid; */
+}
+
+#d1 {
+    padding-top: 0px;
+    background-color: #323335;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+}
+
+.n {
+    width: 300px;
+}
+
+#btnsave:hover {
+    outline: #0d6efd;
+    background-color: lightgreen;
+}
+
+#btnsave {
+
+    background-color: #0d6efd;
+    color: white;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 7px;
+    border-style: ridge;
+}
+
+#parent {
+    /* background-color: rgb(206, 203, 203); */
+    display: grid;
+    text-align: center;
+    grid-template-columns: 25% 25% 50%;
+    grid-template-rows: auto;
+    /* gap: 3px 3px; */
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+
+
+.cart {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    background-color: #0d6efd;
+    padding: 5px;
+    color: #fff;
+    font-size: 20px;
+}
+
+#tab2 tr {
+    border: white solid 10px;
+    background-color: rgb(235, 229, 229);
+    margin: 3px;
+    border-radius: 10px;
+}

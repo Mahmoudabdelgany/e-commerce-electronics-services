@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>products</title>
+    <!-- Main Template CSS File -->
+    <link rel="stylesheet" href="css/prodect.css" />
+    <!-- Render All Elements Normally -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <!-- Font Awesome Library -->
+    <link rel="stylesheet" href="css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;300;400;500;600;700;800&#038;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+     body{
+       background-image: url("images/bg.jpg");
+     }
+    </style>
+    <style>
+      .card {
+          padding-right: 0px;
+          padding-left: 0px;
+          text-align: center;
+          margin: 1%;
+      }
+      .h1{
+        color: aliceblue;
+        text-align: center;
+        font-size: 100px;
+      }
+
+      .card-header {
+          height: 200px;
+      }
+
+      .parent {
+          overflow: hidden;
+          display: flex;
+         padding: 20px;
+         margin: 20px auto;
+          flex-wrap: wrap;
+          align-content: space-between;
+          padding-left: 200px;
+      }
+
+      .child {
+          padding-left: 70px;
+          float: left;
+          margin: 10px;
+          width: 30%;
+          height: 400px;
+           background-color: rgb(251, 248, 243);
+           border-radius: 5px;
+           
+      }
+  </style>
+  </head>
+  <body onload="Getdata()">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./images/logo23.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form class="d-flex navbar-collapse">
+            <input class="form-control me-2 " id="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+            <div class="suggestions">
+              <ul class="sugul">
+              </ul>
+            </div>
+          </form>
+          <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
+
+            <li class="nav-item">
+              <a class="nav-link "style='font-size:24px;color:white' href="#">Cart <i class="fa fa-shopping-cart"></i></a>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+    <!-- End Header -->
+    <!-- Start Landing Section -->
+
+  </div>
+</div>
+    <!-- End Landing Section -->
+ 
+   
+  </div>
+</div>
+  <div id="products">
+    <br><br>
+    <h1 class="h1">products</h1>
+  <!-- <div id="row" style="padding-left: 5%; width: 100%;;display:inline-block;overflow: hidden;"> -->
+
+      <div id="row" class="parent" onclick="newpage()"></div>
+
+</div>
+
+<script>
+  var datatosearch;
+  function Getdata() {
+      // debugger
+      var request = new XMLHttpRequest();
+      request.open("GET", "https://project.apex-program.com/api/GetProducts", true)
+      request.send();
+      request.onreadystatechange = function () {
+          if (request.readyState == 4 & request.status == 200)
+              {display(JSON.parse(request.responseText))
+                datatosearch=JSON.parse(request.responseText).data;
+}
+      }
+  }
+  var x;
+  function display(item) {
+      // debugger
+      var d = item.data;
+      for (let i = 0; i < d.length; i++) {
+          // var x = `<div style="border:1px solid ;position:relative; display:'float-left';overflow:'none';width:34%"><div class="card-header">
+          var x = `<div class="child" onclick="newpage(${item.id},'${item.title}','${item.imagepath}','${item.price}')"><div>
+  <img src="${d[i].imagePath}" style='height:150px ;width:200px;margin-left='20px''>
+  </div><br>
+  <div class="card-body" action="">
+    <div style='height:150px ;width:200px; font-size:15px ;font-family:bold;letter-spacing: 1px;line-height: 1.2;' class="card-subtitle">${d[i].title}+${d[i].description}</div>
+    <p class="card-subtitle text-muted" style='font-size:15px ; font-family:bold'><b>*Price<b> : ${d[i].price}</p>
+    <button style="width:300px; background-color: #FCC655" type="button" class="btn btn-warning"  onclick="AddToCart(${item.id},'${item.title}','${item.imagepath}','${item.price}')" ><b>Add to Cart<b></button>
+  </div></div><br><br>`
+          document.getElementById("row").innerHTML += x;
+      }
+  
+
+  }
+  function AddToCart() {
+  location.replace("https://www.w3schools.com")
+  }
+  function newpage(){
+     window.open ('request.open("GET", "https://project.apex-program.com/api/GetProducts", true)');
+  }
+  //         onclick="AddToCart(${item.id},'${item.title}','${item.imagepath}','${item.price}')"
+
+</script>
+
+    <!-- Start Footer -->
+      <!-- Start Footer -->
+  <div class="footer">
+    <div class="container">
+      <img src="./images/logo23.png" alt="Logo" />
+      <p>We Are Global</p>
+      <div class="social-icons">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fas fa-home"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+      <p class="copyright">&copy; 2022 <span>Bondi</span> All Right Reserved</p>
+    </div>
+  </div>
+  <!-- End Footer -->
+  <script type="text/javascript" src="product.js"></script>
+
+  </body>
+</html>

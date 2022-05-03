@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="Getdata">
+  <div class="click">
+    <div id="row" class="parent" onclick="newpage()">
+     
+    </div>
+  </div>  
+  <script>
+    function Getdata() {
+         debugger
+        var request = new XMLHttpRequest();
+        request.open("GET","https://project.apex-program.com/api/GetProducts", true)
+        request.send();
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 & request.status == 200)
+                display(JSON.parse(request.responseText))
+        }
+    }
+    var x;
+    function display(obj) {
+        debugger
+        var d = obj.data;
+        for (let i = 0; i < d.length; i++) {
+            x = `<div class=child><tr><td>${d[i].title}</td>
+    <td>${d[i].description}</td><td>${d[i].price}</td>
+    <td><img src="${d[i].imagePath}" alt="No Image" id="img" style='height:150px ;width:200px;'></td></div>`
+        
+        document.getElementById("row").innerHTML += x;
+            }
+    }
+
+</script>
+</body>
+</html>

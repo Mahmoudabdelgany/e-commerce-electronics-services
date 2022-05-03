@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Store</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --main-color: #10cab7;
+    --secondary-color: #2c4755;
+    --section-padding: 60px;
+    --section-background: #f6f6f6;
+    --main-duration: 0.5s;
+  }
+  /* End Variables */
+  /* Start Global Rules */
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Work Sans", sans-serif;
+  }
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Small */
+  @media (min-width: 768px) {
+    .container {
+      width: 750px;
+    }
+  }
+  /* Medium */
+  @media (min-width: 992px) {
+    .container {
+      width: 970px;
+    }
+  }
+  /* Large */
+  @media (min-width: 1200px) {
+    .container {
+      width: 1170px;
+    }
+  }
+  /* End Global Rules */
+  /* Start Components */
+  .special-heading {
+    color: #ebeced;
+    font-size: 100px;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: -3px;
+    margin: 0;
+  }
+  .special-heading + p {
+    margin: -30px 0 0;
+    font-size: 20px;
+    text-align: center;
+    color: #797979;
+  }
+  @media (max-width: 767px) {
+    .special-heading {
+      font-size: 60px;
+    }
+    .special-heading + p {
+      margin-top: -20px;
+    }
+  }
+  /* End Components */
+  /* Start Header */
+  .header {
+    padding: 20px;
+  }
+  .header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .search{
+  
+    width: 20px;
+    
+  }
+  
+  .header .logo {
+    width: 60px;
+  }
+  .header .links {
+    position: relative;
+  }
+  .header .links:hover .icon span:nth-child(2) {
+    width: 100%;
+  }
+  .header .links .icon {
+    width: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .header .links .icon span {
+    background-color: #333;
+    margin-bottom: 5px;
+    height: 2px;
+  }
+  .header .links .icon span:first-child {
+    width: 100%;
+  }
+  .header .links .icon span:nth-child(2) {
+    width: 60%;
+    transition: var(--main-duration);
+  }
+  .header .links .icon span:last-child {
+    width: 100%;
+  }
+  .header .links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f6;
+    position: absolute;
+    right: 0;
+    min-width: 200px;
+    top: calc(100% + 15px);
+    display: none;
+    z-index: 1;
+  }
+  .header .links ul::before {
+    content: "";
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #f6f6f6 transparent;
+    position: absolute;
+    right: 5px;
+    top: -20px;
+  }
+  .header .links:hover ul {
+    display: block;
+  }
+  .header .links ul li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+    transition: var(--main-duration);
+  }
+  .header .links ul li a:hover {
+    padding-left: 25px;
+  }
+  .header .links ul li:not(:last-child) a {
+    border-bottom: 1px solid #ddd;
+  }
+  /* End Header */
+  /* Start Landing Section */
+  .landing {
+    background-image: url(../images/landing.jpg);
+    background-size: cover;
+    height: 200px;
+    position: relative;
+  }
+  .landing .intro-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-width: 100%;
+  }
+  .landing .intro-text h1 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 50px;
+    color: var(--main-color);
+  }
+  .landing .intro-text p {
+    font-size: 19px;
+    line-height: 1.8;
+  }
+  /* End Landing Section */
+  /* Start Features */
+  .features {
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+    background-color: var(--section-background);
+  }
+  .features .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+  .features .feat {
+    padding: 20px;
+    text-align: center;
+  }
+  .features .feat i {
+    color: var(--main-color);
+  }
+  .features .feat h3 {
+    font-weight: 800;
+    margin: 30px 0;
+  }
+  .features .feat p {
+    line-height: 1.8;
+    color: #777;
+    font-size: 17px;
+  }
+  
+  
+  
+  /* End About */
+  /* Start Contact */
+  .contact {
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+    background-color: var(--section-background);
+  }
+  .contact .info {
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+    text-align: center;
+  }
+  .contact .info .label {
+    font-size: 35px;
+    font-weight: 800;
+    color: var(--secondary-color);
+    letter-spacing: -2px;
+    margin-bottom: 15px;
+  }
+  .contact .info .link {
+    display: block;
+    font-size: 35px;
+    font-weight: 800;
+    color: var(--main-color);
+    text-decoration: none;
+  }
+  .contact .info .social {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  .contact .info .social i {
+    margin-left: 10px;
+    color: var(--secondary-color);
+  }
+  @media (max-width: 767px) {
+    .contact .info .label,
+    .contact .info .link {
+      font-size: 25px;
+    }
+  }
+  /* End Contact */
+  /* Start Footer */
+  .footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 30px 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  .footer span {
+    font-weight: bold;
+    color: var(--main-color);
+  }
+  </style>
+  <style>
+    .card {
+        padding-right: 0px;
+        padding-left: 0px;
+        text-align: center;
+        margin: 1%;
+    }
+  
+    .card-header {
+        height: 200px;
+    }
+  
+    .parent {
+        overflow: hidden;
+        display: flex;
+        padding: 20px;
+        margin: 20px auto;
+        flex-wrap: wrap;
+        align-content: space-between;
+    }
+  
+    .child {
+        /* padding-left: 3%; */
+        float: left;
+        margin: 10px;
+        width: 30%;
+        height: 400px;
+        background-color: rgb(251, 248, 243);
+        border-radius: 5px;
+        text-align: center;
+    }
+  </style>
+</head>
+
+<body onload="Getdata()">
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="../images/logo23.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex navbar-collapse">
+          <input id="searchtext"class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-primary" type="submit" onsubmit="findProduct()">Search</button>
+        </form>
+        <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Sign in
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              
+              <li><a class="dropdown-item" onclick="logout()">Log out</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <div>
+              <!-- <button style="font-size:24px">Cart <i class="fa fa-shopping-cart" style="background-color:transparent;"></i></button> -->
+              <a style="text-decoration:none;font-size:25px;"  href="./cart.html">Cart <img style="width:40px;height:30px;" src="../images/download.png" alt=""> </a>
+            </div>
+
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  <div id="products">
+    <br><br>
+    <div id="row" class="parent"></div>
+  </div>
+  <div class="contact">
+    <div class="container">
+      <h2 class="special-heading">Contact</h2>
+      <p>We are born to create</p>
+      <div class="info">
+        <p class="label">Feel free to drop us a line at:</p>
+        <a href="mailto:BAndi@mail.com?subject=Contact" class="link">BAndi@mail.com</a>
+        <div class="social">
+          Find Us On Social Networks
+          <i class="fab fa-youtube"></i>
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-twitter"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2022 <span>Bandi</span> All Right Reserved</div>
+  <script>
+    function Getdata() {
+      //debugger
+      var request = new XMLHttpRequest();
+      request.open("GET", "https://project.apex-program.com/api/GetProducts", true)
+      request.send();
+      request.onreadystatechange = function () {
+        if (request.readyState == 4 & request.status == 200)
+          display(JSON.parse(request.responseText))
+      }
+    }
+    // var x;
+    function display(item) {
+      //debugger
+      var d = item.data;
+      for (let i = 0; i < d.length; i++) {
+        // var x = `<div style="border:1px solid ;position:relative; display:'float-left';overflow:'none';width:34%"><div class="card-header">
+        var x = `<div class="child">
+                        <div style="padding-top:20px;">
+                            <img id="img${i}" src="${d[i].imagePath}" style='height:150px ;width:200px;margin-left:'20px';padding-top:'40px;' onmouseover="maxmize(this)" onmouseout="minimize(this)"">
+                        
+                            </div>
+                        <div class="card-body">
+                            <div style='height:120px ;width:350px;' class="card-subtitle">
+                                ${d[i].title}+${d[i].description}
+                            </div>
+                            <p class="card-subtitle text-muted">
+                                Price : ${d[i].price}
+                            </p>
+                            <button id="btn" style="width:200px; background-color: #FCC655" type="button" onclick="writeDataIntoCookies('${d[i].title}','${d[i].description}',document.getElementById('img${i}').getAttribute('src'),'${d[i].price}')"> Add to Cart </button>
+                        </div>
+                    </div>`
+
+        document.getElementById("row").innerHTML += x;
+      }
+    }
+
+    function maxmize(img)
+    {
+      img.style.height='300px';
+      img.style.width="300px";
+    }
+    function minimize(img)
+    {
+      // height:150px ;width:200px
+      img.style.height='150px';
+      img.style.width="200px";
+    }
+    function writeDataIntoCookies(title, description, imagePath, price) {
+      console.log(imagePath)
+      var cart = {};
+      //if there is cart 
+      if (localStorage.getItem("Cart")) {
+        cart = JSON.parse(localStorage.getItem("Cart"));
+        //if item exists in cart
+        if (cart[title]) {
+          cart[title].count++;
+          localStorage.setItem("Cart", JSON.stringify(cart));
+        }
+        //if item is new to cart
+        else {
+          cart[title] = { description: description, imagePath: imagePath, price: price, count: 1 };
+          localStorage.setItem("Cart", JSON.stringify(cart));
+        }
+      }
+      //if there is no cart
+      else {
+        cart[title] = { description: description, imagePath: imagePath, price: price, count: 1 };
+        localStorage.setItem("Cart", JSON.stringify(cart));
+      }
+      //console.log(cart);
+    }
+    //Get user name
+    let name = "username=";
+    let ca = document.cookie.split(';');
+    var username;
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        username = c.substring(name.length, c.length);
+      }
+    }
+    document.getElementById("navbarDropdown").innerHTML = "Welcome " + username;
+
+
+    window.OpenCartWindow = OpenCartWindow;
+    function OpenCartWindow() {
+      var win = open("Cart.html", "_blank", "width=1500px,height=700px");
+    }
+
+
+  </script>
+  <script src="../js/all.min.js"></script>
+  <script src="../js/jquery-3.6.0.min.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script>
+
+
+    function GetCount() {
+      let name = "username=";
+      let ca = document.cookie.split(';');
+      var username;
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          username = c.substring(name.length, c.length);
+        }
+      }
+      document.getElementById("navbarDropdown").innerHTML = "Welcome " + username;
+    }
+    function logout() {
+                const d = new Date();
+                d.setTime(d.getTime() - (3 * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = "username=" + "" + ";" + expires + ";path=/";
+                window.location.replace("../index.html");
+            }
+  </script>
+
+
+
+<script>
+  function findProduct(){
+    
+  }
+</script>
+
+</body>
+
+</html>
